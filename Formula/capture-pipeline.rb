@@ -6,7 +6,6 @@ class CapturePipeline < Formula
   license "MIT"
 
   depends_on "uv"
-  depends_on "blackhole-2ch"
 
   def install
     # Install via uv to keep deps isolated
@@ -17,8 +16,10 @@ class CapturePipeline < Formula
     <<~EOS
       Audio setup required:
 
-      1. Reboot your Mac (BlackHole driver needs restart).
-      2. Open Audio MIDI Setup.app (in /System/Applications/Utilities).
+      1. Install audio loopback:
+         brew install --cask blackhole-2ch
+      2. Reboot your Mac (BlackHole driver needs restart).
+      3. Open Audio MIDI Setup.app (in /System/Applications/Utilities).
       3. Create Multi-Output Device:
          + → Create Multi-Output Device → check BlackHole 2ch + your speakers.
       4. Create Aggregate Device:
