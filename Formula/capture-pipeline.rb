@@ -8,8 +8,28 @@ class CapturePipeline < Formula
   depends_on "uv"
 
   def install
-    # Install via uv to keep deps isolated
-    system "uv", "tool", "install", "--python", "python3", "."
+    # Copy project files and install deps with uv
+    libexec.install Dir["*"]
+    system "uv", "sync", chdir: libexec
+
+    # Wrapper scripts
+    (bin/"capture-pipeline").write <<~SH
+      #!/bin/bash
+      cd "#{libexec}" && exec uv run python pipeline_tui.py "$@"
+    SH
+    (bin/"capture-server").write <<~SH
+      #!/bin/bash
+      cd "#{libexec}" && exec uv run python pipeline_server.py "$@"
+    SH
+    (bin/"capture-headless").write <<~SH
+      #!/bin/bash
+      cd "#{libexec}" && exec uv run python main.py "$@"
+    SH
+    (bin/"capture-transcribe").write <<~SH
+      #!/bin/bash
+      cd "#{libexec}" && exec uv run python transcribe_mov.py "$@"
+    SH
+    chmod 0755, Dir[bin/"*"]
   end
 
   def caveats
@@ -20,17 +40,16 @@ class CapturePipeline < Formula
          brew install --cask blackhole-2ch
       2. Reboot your Mac (BlackHole driver needs restart).
       3. Open Audio MIDI Setup.app (in /System/Applications/Utilities).
-      3. Create Multi-Output Device:
+      4. Create Multi-Output Device:
          + → Create Multi-Output Device → check BlackHole 2ch + your speakers.
-      4. Create Aggregate Device:
+      5. Create Aggregate Device:
          + → Create Aggregate Device → check BlackHole 2ch + your microphone.
-      5. System Settings → Sound → Output → select Multi-Output Device.
-      6. Set your OpenAI key:
+      6. System Settings → Sound → Output → select Multi-Output Device.
+      7. Set your OpenAI key:
          echo 'OPENAI_API_KEY=sk-...' > ~/.capture-pipeline.env
 
       Launch:
-        cd to your working directory and run:
-          capture-pipeline
+        capture-pipeline
 
       To uninstall:
         brew uninstall capture-pipeline
@@ -42,8 +61,7 @@ class CapturePipeline < Formula
   end
 
   test do
-    # Basic import check
-    system "uv", "run", "python", "-c", <<~PYTHON
+    system "uv", "run", "--directory", libexec, "python", "-c", <<~PYTHON
       from capture import ScreenCapture, AudioCapture
       from processor import VisionProcessor, AudioProcessor, Translator, Summarizer
       print("OK")
