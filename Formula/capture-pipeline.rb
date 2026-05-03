@@ -1,8 +1,8 @@
 class CapturePipeline < Formula
   desc "Screen + audio capture → AI analysis via OpenAI (vision, whisper, summary)"
-  homepage "https://github.com/USER/capture-pipeline"
-  url "https://github.com/USER/capture-pipeline/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "REPLACE_WITH_SHA256"  # run: shasum -a 256 v0.2.0.tar.gz
+  homepage "https://github.com/dsk53910/capture-pipeline"
+  url "https://github.com/dsk53910/capture-pipeline/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "7c1eb11a85441d9bb378d877c5b24bf0121f3592e02184ad8d841c7685ed77bd"
   license "MIT"
 
   depends_on "uv"
@@ -33,7 +33,7 @@ class CapturePipeline < Formula
 
       To uninstall:
         brew uninstall capture-pipeline
-        brew untap USER/capture
+        brew untap dsk53910/capture-pipeline
         brew uninstall --cask blackhole-2ch  # optional
 
       Note: ~/.capture-pipeline.env and output/ files are left intact.
