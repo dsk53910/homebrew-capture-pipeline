@@ -6,7 +6,7 @@ class CapturePipeline < Formula
   license "MIT"
 
   depends_on "uv"
-  depends_on cask: "blackhole-2ch"
+  depends_on "blackhole-2ch"
 
   def install
     # Install via uv to keep deps isolated
