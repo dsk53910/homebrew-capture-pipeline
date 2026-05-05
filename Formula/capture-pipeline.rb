@@ -1,8 +1,8 @@
 class CapturePipeline < Formula
   desc "Screen + audio capture → AI analysis via OpenAI (vision, whisper, summary)"
   homepage "https://github.com/dsk53910/capture-pipeline"
-  url "https://github.com/dsk53910/capture-pipeline/archive/refs/tags/v0.2.1.tar.gz"
-  sha256 "9932459a7a4a2561147467259f496b26a73e64941fbb26b9a25395d35d2cc96e"
+  url "https://github.com/dsk53910/capture-pipeline/archive/refs/tags/v0.2.2.tar.gz"
+  sha256 "4b4869ced78f64a67d3c8d9fe82d88a3016df885e63d28b9b2ce33423f954e45"
   license "MIT"
 
   depends_on "uv"
