@@ -10,7 +10,7 @@ class CapturePipeline < Formula
   def install
     # Copy project files and install deps with uv
     libexec.install Dir["*"]
-    system "uv", "sync", chdir: libexec
+    Dir.chdir(libexec) { system "uv", "sync" }
 
     # Wrapper scripts
     (bin/"capture-pipeline").write <<~SH
